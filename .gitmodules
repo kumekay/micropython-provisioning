@@ -1,0 +1,3 @@
+[submodule "dev_tools/stubs"]
+	path = dev_tools/stubs
+	url = https://github.com/Josverl/micropython-stubs.git
