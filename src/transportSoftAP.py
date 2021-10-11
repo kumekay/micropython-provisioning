@@ -1,8 +1,7 @@
 from binascii import hexlify
 
-from machine import unique_id
 import network
-
+from machine import unique_id
 from microdot_asyncio import Microdot, Response
 
 try:
@@ -28,6 +27,20 @@ class TransportSoftAP:
         app = Microdot()
         self.app = app
         self.provisioned = asyncio.Event()
+
+        @app.route("/")
+        async def show_ui(request):
+            return Response.send_file("provision.html")
+
+        @app.route("/networks")
+        async def list_networks(request):
+            wlan = network.WLAN(network.STA_IF)
+            await asyncio.sleep(0)
+            wlan.active(True)
+            await asyncio.sleep(0)
+            networks = wlan.scan()
+            print(networks)
+            return Response(networks)
 
         @app.route("/", methods=["POST"])
         async def save_creds(request):
@@ -64,6 +77,11 @@ class TransportSoftAP:
 
         asyncio.create_task(self.app.start_server(port=self.port, debug=self.debug))
         await self.provisioned.wait()
+        asyncio.create_task(self._shutdown(ap))
+        return self.creds
+
+    async def _shutdown(self, ap):
+        # Let current requrests to finish
+        await asyncio.sleep(3)
         ap.active(False)
         self.app.shutdown()
-        return self.creds
