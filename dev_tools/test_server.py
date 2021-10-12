@@ -11,9 +11,7 @@ class TestServer:
     def __init__(self, port=8080, required_keys=("ssid", "pw"), extra_keys=None, debug=False):
         self.port = port
         self.required_keys = required_keys
-        self.all_keys = required_keys
-        if extra_keys:
-            self.all_keys = extra_keys.extend(required_keys)
+        self.extra_keys = extra_keys
         self.creds = None
         self.debug = debug
 
@@ -47,13 +45,17 @@ class TestServer:
             ]
             return Response(nets)
 
+        @app.route("/extra_fields")
+        async def list_extra_fields(request):
+            return Response([{"key": key} for key in self.extra_keys])
+
         @app.route("/", methods=["POST"])
         async def save_creds(request):
             self.debug and print("Credentials in HTTP request:", request.json)
             # Validate
             try:
                 for k, v in request.json.items():
-                    if not k in self.all_keys:
+                    if not k in self.required_keys and not k in self.extra_keys:
                         return Response('Key "{}" is unknown'.format(k), status_code=400)
                     if not isinstance(k, str) or not isinstance(v, str):
                         raise TypeError()
