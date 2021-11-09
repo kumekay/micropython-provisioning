@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+microdot = "0.7.2"
+
+[dev-packages]
+black = {version = "*"}
+pylint = {version = "*"}
+
+[requires]
+python_version = "3.10"
