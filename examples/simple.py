@@ -26,6 +26,7 @@ async def main():
     store = StoreNVS(debug=True)
     wlan = await Provisioning(store, transport, debug=True).connect()
     print(wlan.ifconfig())
+    # RESET CONFIG IN 100 SECONDS
     for i in range(100, 0, -1):
         print("resetting in", i)
         await asyncio.sleep(1)
