@@ -5,7 +5,7 @@
     "./src/lib",
     "dev_tools/stubs/stubs/cpython_patch",
     "dev_tools/stubs/stubs/micropython-1_17-frozen/esp32/GENERIC",
-    "dev_tools/stubs/stubs/micropython-esp32-1_16"
+    "dev_tools/stubs/stubs/micropython-v1_17-esp32"
   ],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
@@ -13,7 +13,7 @@
     "./src/lib",
     "dev_tools/stubs/stubs/cpython_patch",
     "dev_tools/stubs/stubs/micropython-1_17-frozen/esp32/GENERIC",
-    "dev_tools/stubs/stubs/micropython-esp32-1_16"
+    "dev_tools/stubs/stubs/micropython-v1_17-esp32"
   ],
   "search.exclude": {
     "dev_tools/stubs/**/*": true
